@@ -73,6 +73,7 @@ web_modules/
 
 # dotenv environment variables file
 .env
+.env.dev
 .env.test
 .env.production
 
@@ -118,3 +119,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# compiled output
+dist
+node_modules
