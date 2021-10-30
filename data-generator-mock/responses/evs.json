@@ -1,0 +1,22 @@
+{
+    "cars": [
+      {
+        "made": "Tesla",
+        "model": "Model S",
+        "year": "2020-08-10",
+        "vin": "PL090201"
+      },
+      {
+        "made": "Porshe",
+        "model": "Taycan",
+        "year": "2020-01-25",
+        "vin": "PL110212"
+      },
+      {
+        "made": "Audi",
+        "model": "E-Tron",
+        "year": "2020-03-20",
+        "vin": "PL990011"
+      }
+    ]
+  }

@@ -1,0 +1,41 @@
+{
+    "vin": "PL110212",
+    "carStatistics": [
+      {
+        "datetime": "2020-03-10T11:00:00",
+        "soc": "30",
+        "chargingPower": 200,
+        "status": "charging"
+      },
+      {
+        "datetime": "2020-03-10T11:15:00",
+        "soc": "40",
+        "chargingPower": 200,
+        "status": "charging"
+      },
+      {
+        "datetime": "2020-03-10T11:30:00",
+        "soc": "50",
+        "chargingPower": 200,
+        "status": "charging"
+      },
+      {
+        "datetime": "2020-03-10T11:45:00",
+        "soc": "60",
+        "chargingPower": 200,
+        "status": "charging"
+      },
+      {
+        "datetime": "2020-03-10T12:00:00",
+        "soc": "70",
+        "chargingPower": 190,
+        "status": "charging"
+      },
+      {
+        "datetime": "2020-03-10T12:15:00",
+        "soc": "80",
+        "chargingPower": 0,
+        "status": "waiting"
+      }
+    ]
+  }

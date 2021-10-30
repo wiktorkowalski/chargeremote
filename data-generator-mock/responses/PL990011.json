@@ -1,0 +1,41 @@
+{
+    "vin": "PL990011",
+    "carStatistics": [
+      {
+        "datetime": "2020-03-10T11:00:00",
+        "soc": "0",
+        "chargingPower": 0,
+        "status": "waiting"
+      },
+      {
+        "datetime": "2020-03-10T11:15:00",
+        "soc": "0",
+        "chargingPower": 0,
+        "status": "waiting"
+      },
+      {
+        "datetime": "2020-03-10T11:30:00",
+        "soc": "0",
+        "chargingPower": 0,
+        "status": "waiting"
+      },
+      {
+        "datetime": "2020-03-10T11:45:00",
+        "soc": "10",
+        "chargingPower": 50,
+        "status": "charging"
+      },
+      {
+        "datetime": "2020-03-10T12:15:00",
+        "soc": "20",
+        "chargingPower": 100,
+        "status": "charging"
+      },
+      {
+        "datetime": "2020-03-10T12:00:00",
+        "soc": "30",
+        "chargingPower": 150,
+        "status": "charging"
+      }
+    ]
+  }
