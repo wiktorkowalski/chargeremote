@@ -7,12 +7,12 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly collectorService: CollectorService
-    ) { }
+  ) { }
 
   @Get()
-  startProcessing(){
+  async startProcessing() {
     console.log('Start processing');
-    if(this.collectorService.tryImportData()){
+    if (await this.collectorService.tryImportData()) {
       return {
         status: 'Success',
         message: 'Processing started'

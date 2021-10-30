@@ -6,7 +6,7 @@ export class VechicleChargeData {
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @ManyToOne(() => VechicleData, vechicleData => vechicleData)
+    @ManyToOne(() => VechicleData, vechicleData => vechicleData, { eager: true })
     vechicleData: VechicleData;
 
     @Column()

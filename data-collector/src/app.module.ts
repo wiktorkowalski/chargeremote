@@ -8,7 +8,7 @@ import { CollectorService } from './collector.service';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ envFilePath: ['.dev.env', '.env'] }), DatabaseModule, HttpModule],
+  imports: [ConfigModule.forRoot({ envFilePath: ['.env.dev', '.env'] }), DatabaseModule, HttpModule],
   controllers: [AppController],
   providers: [AppService, CollectorService, ...vechicleDataProviders, ...vechicleChargeDataProviders],
 })

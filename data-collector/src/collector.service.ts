@@ -21,28 +21,41 @@ export class CollectorService {
   }
 
   async tryImportData(): Promise<boolean> {
+    console.log('start import');
     try {
       const carsData: { cars: VechicleData[] } = await got.get(process.env.DATACOLLECTOR_SOURCE_ADDRESS + 'evs').json();
       const cars = carsData.cars;
-      this.vechicleDataRespository.save(cars);
+      console.log('cars', cars);
+      await this.vechicleDataRespository.save(cars);
+      const vechicleChargeData = await this.vechicleChargeDataRespository.find();
       const carChargeData: VechicleChargeData[] = [];
       for (const car of cars) {
+        console.log(car.vin);
         const chargeDataResponse: { carStatistics: VechicleChargeData[] } = await got.get(process.env.DATACOLLECTOR_SOURCE_ADDRESS + 'evs/' + car.vin).json();
         chargeDataResponse.carStatistics.forEach(chargeData => {
-          carChargeData.push({
-            vechicleData: car,
-            datetime: chargeData.datetime,
-            soc: chargeData.soc,
-            chargingPower: chargeData.chargingPower,
-            status: chargeData.status
-          });
+          if (!vechicleChargeData.some((oldData) => {
+            const matchVin = oldData.vechicleData.vin === car.vin;
+            const matchDate = oldData.datetime.getTime() === new Date(chargeData.datetime).getTime();
+            return matchVin && matchDate;
+          })) {
+            carChargeData.push({
+              vechicleData: car,
+              datetime: chargeData.datetime,
+              soc: chargeData.soc,
+              chargingPower: chargeData.chargingPower,
+              status: chargeData.status
+            });
+          }
         });
       }
-      this.vechicleChargeDataRespository.save(carChargeData);
-      this.redisClient.emit('data-import-success', {}); // todo: emit vins
+      console.log(`Length: ${carChargeData.length}`);
+      await this.vechicleChargeDataRespository.save(carChargeData);
+      this.redisClient.emit('data-import-success', cars.map(car => car.vin));
+      console.log('data imported');
       return true;
     }
-    catch {
+    catch (ex) {
+      console.error(ex);
       return false;
     }
   }
