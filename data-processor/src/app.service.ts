@@ -35,11 +35,11 @@ export class AppService {
     const vechicleChargeDataMap = new Map<string, VechicleChargeStats>();
     const vechicleChargePowerMap = new Map<string, number[]>();
     for (const data of vechicleChargeData) {
-      if (!vechicleChargeDataMap.has(data.vechicleData.vin)) { vechicleChargeDataMap.set(data.vechicleData.vin, { vechicleData: data.vechicleData, soc: data.soc, status: data.status, averageChargingPower: 0 }); }
+      if (!vechicleChargeDataMap.has(data.vechicleData.vin)) { vechicleChargeDataMap.set(data.vechicleData.vin, { vechicleData: data.vechicleData, soc: data.soc, datetime: data.datetime, status: data.status, averageChargingPower: 0 }); }
       if (!vechicleChargePowerMap.has(data.vechicleData.vin)) { vechicleChargePowerMap.set(data.vechicleData.vin, []); }
 
-      if (vechicleChargeDataMap.get(data.vechicleData.vin).createDate?.getTime() < data.datetime.getTime()) {
-        vechicleChargeDataMap.set(data.vechicleData.vin, { vechicleData: data.vechicleData, soc: data.soc, status: data.status, averageChargingPower: 0 });
+      if (vechicleChargeDataMap.get(data.vechicleData.vin).datetime.getTime() < data.datetime.getTime()) {
+        vechicleChargeDataMap.set(data.vechicleData.vin, { vechicleData: data.vechicleData, soc: data.soc, datetime: data.datetime, status: data.status, averageChargingPower: 0 });
       }
       vechicleChargePowerMap.get(data.vechicleData.vin).push(data.chargingPower);
     }
