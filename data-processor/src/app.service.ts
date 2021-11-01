@@ -44,11 +44,17 @@ export class AppService {
       vechicleChargePowerMap.get(data.vechicleData.vin).push(data.chargingPower);
     }
     for (const vin of vins) {
-      const temp = vechicleChargePowerMap.get(vin).reduce((a, b) => a + b, 0) / vechicleChargePowerMap.get(vin).length;
-      vechicleChargeDataMap.get(vin).averageChargingPower = temp;
+      const averageChargingPower = this.calculateAverage(vechicleChargePowerMap.get(vin));
+      vechicleChargeDataMap.get(vin).averageChargingPower = averageChargingPower;
     }
     console.log(`Finished processing {${vins}}`);
 
     this.vechicleChargeStatsRespository.save(Array.from(vechicleChargeDataMap.values()));
+  }
+
+  calculateAverage(array: number[]) {
+    if (array.length === 0) return 0;
+    const sum = array.reduce((a, b) => a + b, 0);
+    return sum / array.length;
   }
 }

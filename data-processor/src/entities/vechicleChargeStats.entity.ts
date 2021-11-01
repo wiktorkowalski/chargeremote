@@ -1,4 +1,4 @@
-import { VechicleData } from "src/entities/vechicleDataImport.entity";
+import { VechicleData } from "../entities/vechicleDataImport.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('VechicleChargeStats')
