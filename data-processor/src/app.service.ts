@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { createClient } from 'redis';
 import { RedisClientType } from 'redis/dist/lib/client';
 import { Repository } from 'typeorm';
-import { VechicleChargeData } from './importEntities/vechicleChargeDataImport.entity';
-import { VechicleChargeStats } from './statsEntities/vechicleChargeStats.entity';
+import { VechicleChargeData } from './entities/vechicleChargeDataImport.entity';
+import { VechicleChargeStats } from './entities/vechicleChargeStats.entity';
 
 @Injectable()
 export class AppService {
@@ -24,13 +24,13 @@ export class AppService {
     await this.redisClient.connect();
     await this.redisClient.subscribe('data-import-success', (message) => {
       console.log('Received data-import-success');
-      this.processData(JSON.parse(message).data);
+      this.processData(JSON.parse(message));
     });
   }
 
   async processData(vins: string[]) {
     console.log(`Start processing {${vins}}`);
-    const vechicleChargeData = await (await this.vechicleChargeDataRespository.find({ loadEagerRelations: true })).filter((item) => { return vins.includes(item.vechicleData.vin); }); //filtering should be done on DB side
+    const vechicleChargeData = (await this.vechicleChargeDataRespository.find()).filter((item) => { return vins.includes(item.vechicleData.vin); }); //filtering should be done on DB side
     console.log(`Found ${vechicleChargeData.length} records`);
     const vechicleChargeDataMap = new Map<string, VechicleChargeStats>();
     const vechicleChargePowerMap = new Map<string, number[]>();

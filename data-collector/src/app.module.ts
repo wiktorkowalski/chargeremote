@@ -3,13 +3,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { vechicleChargeDataProviders, vechicleDataProviders } from './app.providers';
-import { AppService } from './app.service';
 import { CollectorService } from './collector.service';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ envFilePath: ['.env.dev', '.env'] }), DatabaseModule, HttpModule],
   controllers: [AppController],
-  providers: [AppService, CollectorService, ...vechicleDataProviders, ...vechicleChargeDataProviders],
+  providers: [CollectorService, ...vechicleDataProviders, ...vechicleChargeDataProviders],
 })
 export class AppModule { }

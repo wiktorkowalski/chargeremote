@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm';
-import { VechicleData } from './importEntities/vechicleDataImport.entity';
-import { VechicleChargeStats } from './statsEntities/vechicleChargeStats.entity';
+import { VechicleData } from './entities/vechicleDataImport.entity';
+import { VechicleChargeStats } from './entities/vechicleChargeStats.entity';
 
 export const vechicleDataProviders = [
     {

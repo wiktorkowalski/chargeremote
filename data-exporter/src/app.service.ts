@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { VechicleChargeStats } from './statsEntities/vechicleChargeStats.entity';
+import { VechicleChargeStats } from './entities/vechicleChargeStats.entity';
 import { VechicleInfo } from './vechicleInfo';
 
 @Injectable()
