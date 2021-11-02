@@ -1,4 +1,4 @@
-FROM node:16.12.0-alpine
+FROM node:16-alpine
 EXPOSE 3211
 WORKDIR /app/
 COPY package*.json ./

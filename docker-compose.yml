@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: "chargeremote-postgres"
+    image: "postgres:14.0"
+    env_file: .env.compose
+    ports:
+      - "5432:5432"
+
+  redis:
+    container_name: "chargeremote-redis"
+    image: "redis:6.2.5-buster"
+    env_file: .env.compose
+
+  data-generator-mock:
+    container_name: "chargeremote-data-generator-mock"
+    build: ./data-generator-mock/
+    env_file: .env.compose
+    ports:
+      - "3211:3211"
+
+  data-collector:
+    container_name: "chargeremote-data-collector"
+    build: ./data-collector/
+    env_file: .env.compose
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+      - data-generator-mock
+
+  data-processor:
+    container_name: "chargeremote-data-processor"
+    build: ./data-processor/
+    env_file: .env.compose
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgres
+      - redis
+
+  data-exporter:
+    container_name: "chargeremote-data-exporter"
+    build: ./data-exporter/
+    env_file: .env.compose
+    ports:
+      - "3002:3020"
+    depends_on:
+      - postgres
