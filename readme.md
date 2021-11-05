@@ -15,6 +15,14 @@ Example microservices scenario implemented with Nest.JS
 - Mock service for third party API
 - Swagger endpoint for services with REST api
 
+<details>
+  <summary>Architecture diagram</summary>
+<br>
+  
+  ![chargeremote](chargeremote.drawio.png)
+
+</details>
+
 # Tests
 Project includes *basic* unit tests in `data-collector` and `data-exporter` services.
 To run these tests, simply run
