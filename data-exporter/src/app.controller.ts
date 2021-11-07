@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -11,7 +11,7 @@ export class AppController {
   }
 
   @Get('/evs/:vin')
-  getEvInfo(vin: string) {
+  getEvInfo(@Param('vin') vin: string) {
     return this.appService.getEvInfo(vin);
   }
 }
