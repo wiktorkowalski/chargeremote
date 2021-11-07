@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, Unique } from 'typeorm';
 import { VechicleChargeStats } from './entities/vechicleChargeStats.entity';
 import { VechicleInfo } from './vechicleInfo';
 
@@ -9,7 +9,7 @@ export class AppService {
   ) { }
 
   async getEvsInfo(): Promise<VechicleInfo[]> {
-    const vechicleChargeStats = await this.vechicleChargeStatsRespository.find();
+    const vechicleChargeStats = (await this.vechicleChargeStatsRespository.find()).filter(this.isNewerEvent);
     const vechicleData: VechicleInfo[] = [];
     for (const stats of vechicleChargeStats) {
       vechicleData.push({
@@ -29,7 +29,7 @@ export class AppService {
   }
 
   async getEvInfo(vin: string): Promise<VechicleInfo> {
-    const vechicleChargeStats = await this.vechicleChargeStatsRespository.findOne({ where: { vin: vin } });
+    const vechicleChargeStats = await this.vechicleChargeStatsRespository.findOne({ where: { vechicleData: { vin: vin } }, order: { createDate: 'DESC' } });
     return {
       vin: vechicleChargeStats.vechicleData.vin,
       made: vechicleChargeStats.vechicleData.made,
@@ -42,5 +42,15 @@ export class AppService {
         datetime: vechicleChargeStats.datetime,
       }
     }
+  }
+
+  isNewerEvent(item: VechicleChargeStats, index: number, array: VechicleChargeStats[]) {
+    
+    for (const oldItem of array.filter((oldItem) => oldItem.vechicleData.vin === item.vechicleData.vin)) {
+      if (item.createDate.getDate() > oldItem.createDate.getDate()) {
+        return true;
+      }
+    }
+    return false;
   }
 }
