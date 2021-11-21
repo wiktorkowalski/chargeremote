@@ -30,6 +30,7 @@ export class AppService {
 
   async getEvInfo(vin: string): Promise<VechicleInfo> {
     const vechicleChargeStats = await this.vechicleChargeStatsRespository.findOne({ where: { vechicleData: { vin: vin } }, order: { createDate: 'DESC' } });
+    if (!vechicleChargeStats) return null;
     return {
       vin: vechicleChargeStats.vechicleData.vin,
       made: vechicleChargeStats.vechicleData.made,

@@ -1,5 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
+import { ApiParam } from '@nestjs/swagger';
 import { AppService } from './app.service';
+import { GetEvInfoQuery } from './getEvInfoQuery';
 
 @Controller()
 export class AppController {
@@ -11,7 +13,12 @@ export class AppController {
   }
 
   @Get('/evs/:vin')
-  getEvInfo(@Param('vin') vin: string) {
-    return this.appService.getEvInfo(vin);
+  @ApiParam({ name: 'vin', required: true, type: String })
+  async getEvInfo(@Param() queryParams: GetEvInfoQuery) {
+    const result = await this.appService.getEvInfo(queryParams.vin);
+    if (!result) {
+      throw new NotFoundException(`VIN ${queryParams.vin} not found`);
+    }
+    return result;
   }
 }
